@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+import React, { useState } from 'react';
+import CreateBlogForm from './components/CreateBlogForm';
+import BlogList from './components/BlogList';
+import BlogDetail from './components/BlogDetail';
+import './styles.css';  // Import the styles
 
-function App() {
+const App = () => {
+  const [selectedBlog, setSelectedBlog] = useState(null);
+
+  const handleBlogClick = (blogId) => {
+    setSelectedBlog(blogId);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <h2>Create a New Blog Entry</h2>
+      <CreateBlogForm />
+
+      {selectedBlog ? (
+        <BlogDetail blogId={selectedBlog} />
+      ) : (
+        <>
+          <h2>Blog Entries</h2>
+          <BlogList onBlogClick={handleBlogClick} />
+        </>
+      )}
     </div>
   );
-}
+};
 
 export default App;
